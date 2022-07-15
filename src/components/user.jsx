@@ -4,7 +4,7 @@ import Bookmark from './bookmark'
 
 
 
-const User = ({ user, ...rest }) => {
+const User = ({ user, onDelete }) => {
   return (
     <>
       <tr>

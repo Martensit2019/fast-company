@@ -1,10 +1,13 @@
-import React from "react";
+import React, {useState} from "react"
 
-const Bookmark = ({status, ...rest}) => {
+const Bookmark = () => {
+  const [isAddFavorite, setIsAddFavorite] = useState(false)
 
-  // const classes=
+  const addFavirite=()=>{
+    setIsAddFavorite((prevState) => !prevState)
+  }
 
-  return <div><i class="bi bi-bookmark"></i></div>
+  return <div className="btn btn-outline-secondary" onClick={addFavirite}><i className={'bi bi-bookmark' + (isAddFavorite ? '-fill' : '')}></i></div>  
 }
 
 export default Bookmark
