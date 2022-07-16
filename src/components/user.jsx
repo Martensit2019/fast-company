@@ -4,7 +4,7 @@ import Bookmark from './bookmark'
 
 
 
-const User = ({ user, onDelete }) => {
+const User = ({ user, onDelete, ...rest }) => {
   return (
     <>
       <tr>
@@ -17,10 +17,10 @@ const User = ({ user, onDelete }) => {
         <td>{user.profession.name}</td>
         <td>{user.completedMeetings}</td>
         <td>{user.rate} / 5</td>
-        <td><Bookmark /></td>
+        <td><Bookmark status={user.isFavorite} {...rest} /></td>
         <td>
           {/* <button className="btn btn-danger"> */}
-          <button className="btn btn-danger" onClick={()=>onDelete(user._id)}>
+          <button className="btn btn-danger" onClick={()=>onDelete(user._id) }>
             {/* <button className="btn btn-danger" onClick={() => handleDelete(user._id)}> */}
             Удалить
           </button>
