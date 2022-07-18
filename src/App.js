@@ -6,15 +6,17 @@ import api from './api'
 const App = () => {
   const [users, setUsers] = useState(api.users.fetchAll())
   const handleDelete = (userId) => {
-    setUsers((prevState) => prevState.filter((user) => user._id !== userId))
+    setUsers(users.filter((user) => user._id !== userId))
   }
   const handleToggleBookMark = (id) => {
-    console.log('status');
-    const newUsers = users.map((user) => ({
-      ...user,
-      isFavorite: false
-    }))
-    setUsers(newUsers)
+    setUsers(
+      users.map(user =>{
+        if(user._id === id){
+          return {...user, bookmark: !user.bookmark}
+        }
+        return user
+      })
+    )
   }
 
   return (

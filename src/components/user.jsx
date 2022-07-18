@@ -2,26 +2,24 @@ import React from 'react'
 import Qualitie from './qualitie'
 import Bookmark from './bookmark'
 
-
-
-const User = ({ user, onDelete, ...rest }) => {
+const User = ({ _id, name, qualities, profession, completedMeetings, rate, onDelete, bookmark, onToggleBookMark }) => {
   return (
     <>
       <tr>
-        <td>{user.name}</td>
+        <td>{name}</td>
         <td>
-          {user.qualities.map((quality) => (
-            <Qualitie quality={quality} key={quality._id} />
+          {qualities.map((quality) => (
+            <Qualitie key={quality._id} {...quality} />
           ))}
         </td>
-        <td>{user.profession.name}</td>
-        <td>{user.completedMeetings}</td>
-        <td>{user.rate} / 5</td>
-        <td><Bookmark status={user.isFavorite} {...rest} /></td>
+        <td>{profession.name}</td>
+        <td>{completedMeetings}</td>
+        <td>{rate} / 5</td>
         <td>
-          {/* <button className="btn btn-danger"> */}
-          <button className="btn btn-danger" onClick={()=>onDelete(user._id) }>
-            {/* <button className="btn btn-danger" onClick={() => handleDelete(user._id)}> */}
+          <Bookmark status={bookmark} onClick={()=>onToggleBookMark(_id)} />
+        </td>
+        <td>
+          <button className="btn btn-danger" onClick={() => onDelete(_id)}>
             Удалить
           </button>
         </td>

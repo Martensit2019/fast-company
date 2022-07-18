@@ -1,13 +1,8 @@
-import React, {useState} from "react"
+import React from "react"
 
-const Bookmark = ({...rest}) => {
-  const [isAddFavorite, setIsAddFavorite] = useState(false)
+const Bookmark = ({status, ...rest}) => {  
 
-  const onToggleBookMark=()=>{
-    setIsAddFavorite((prevState) => !prevState)
-  }
-
-  return <div className="btn btn-outline-secondary" onClick={onToggleBookMark}><i className={'bi bi-bookmark' + (isAddFavorite ? '-fill' : '')}></i></div>  
+  return <div className="btn btn-outline-secondary" {...rest}><i className={'bi bi-bookmark' + (status ? '-fill' : '')}></i></div>
 }
 
 export default Bookmark
