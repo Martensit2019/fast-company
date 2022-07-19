@@ -1,8 +1,15 @@
-import React from "react"
+import React from "react";
+import PropTypes from "prop-types";
 
-const Bookmark = ({status, ...rest}) => {  
+const Bookmark = ({ status, ...rest }) => {
+  return (
+    <div className="btn btn-outline-secondary" {...rest}>
+      <i className={"bi bi-bookmark" + (status ? "-fill" : "")}></i>
+    </div>
+  );
+};
+Bookmark.propTypes = {
+  status: PropTypes.bool
+};
 
-  return <div className="btn btn-outline-secondary" {...rest}><i className={'bi bi-bookmark' + (status ? '-fill' : '')}></i></div>
-}
-
-export default Bookmark
+export default Bookmark;
