@@ -22,7 +22,6 @@ const Users = ({ users, ...rest }) => {
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item);
-    console.log(item);
   };
 
   const handlePageChange = (pageIdx) => {
@@ -30,7 +29,10 @@ const Users = ({ users, ...rest }) => {
   };
 
   const filteredUsers = selectedProf
-    ? users.filter((user) => user.profession === selectedProf)
+    ? users.filter(
+      (user) =>
+        JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+    )
     : users;
   const count = filteredUsers.length;
   const usersCrop = paginate(filteredUsers, currentPage, pageSize);
