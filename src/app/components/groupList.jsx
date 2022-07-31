@@ -8,6 +8,30 @@ const GroupeList = ({
   onItemSelect,
   selectedItem
 }) => {
+  // ------------------------------------------
+  // решение из видео, но мне непонятно, зачем нужна здесь эта
+  // проверка на массив, если и без этой проверки в случае массива
+  // на выходе имеем объект типа  {_id: '67rdca3eeb7f6fgeed471818', name: 'Доктор'}
+  // ------------------------------------------
+  // if (Array.isArray(items)) {
+  //   return (
+  //     <ul className="list-group">
+  //       {items.map((item) => (
+  //         <li
+  //           className={
+  //             "list-group-item" +
+  //             (item === selectedItem ? " active" : "")
+  //           }
+  //           key={item[valueProperty]}
+  //           onClick={() => onItemSelect(item)}
+  //           role="button"
+  //         >
+  //           {item[contentProperty]}
+  //         </li>
+  //       ))}
+  //     </ul>
+  //   );
+  // }
   return (
     <ul className="list-group">
       {Object.keys(items).map((item) => (
