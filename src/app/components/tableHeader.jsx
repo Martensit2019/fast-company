@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 const TableHeader = ({ onSort, selectedSort, columns }) => {
   const handleSort = (item) => {
+    console.log("item->", item);
     if (selectedSort.path === item) {
       onSort({
         ...selectedSort,
@@ -11,6 +12,16 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
     } else {
       onSort({ path: item, order: "asc" });
     }
+    renderSortIcon(item);
+  };
+
+  const renderSortIcon = (col) => {
+    if (selectedSort.path === col) {
+      return selectedSort.order === "asc"
+        ? <span style={{ paddingLeft: "10px" }}><i className="bi bi-sort-down-alt"></i></span>
+        : <span style={{ paddingLeft: "10px" }}><i className="bi bi-sort-down"></i></span>;
+    }
+    return null;
   };
   return (
     <thead>
@@ -27,25 +38,9 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
             {...{ role: columns[column].path && "button" }}
           >
             {columns[column].name}
+            {columns[column].path && renderSortIcon(columns[column].path)}
           </th>
         ))}
-        {/* <th scope="col" onClick={() => handleSort("name")}>
-          Имя
-        </th>
-        <th scope="col">Качества</th>
-        <th scope="col" onClick={() => handleSort("profession.name")}>
-          Профессия
-        </th>
-        <th scope="col" onClick={() => handleSort("completedMeetings")}>
-          Встретился, раз
-        </th>
-        <th scope="col" onClick={() => handleSort("rate")}>
-          Оценка
-        </th>
-        <th scope="col" onClick={() => handleSort("bookmark")}>
-          Избранное
-        </th>
-        <th /> */}
       </tr>
     </thead>
   );
