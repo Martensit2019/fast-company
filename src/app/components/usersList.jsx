@@ -8,7 +8,7 @@ import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
 
-const Users = () => {
+const UsersList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfessions] = useState();
   const [selectedProf, setSelectedProf] = useState();
@@ -76,9 +76,9 @@ const Users = () => {
   if (users) {
     const filteredUsers = selectedProf
       ? users.filter(
-        (user) =>
-          JSON.stringify(user.profession) === JSON.stringify(selectedProf)
-      )
+          (user) =>
+            JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+        )
       : users;
     const count = filteredUsers.length;
     const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
@@ -127,8 +127,8 @@ const Users = () => {
   return "loading...";
 };
 
-Users.propTypes = {
+UsersList.propTypes = {
   users: PropTypes.array.isRequired
 };
 
-export default Users;
+export default UsersList;
