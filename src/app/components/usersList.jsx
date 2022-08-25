@@ -7,12 +7,14 @@ import GroupeList from "./groupList";
 import SearchStatus from "./searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
+import Search from "./search";
 
 const UsersList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [professions, setProfessions] = useState();
   const [selectedProf, setSelectedProf] = useState();
   const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+  const [searchValue, setSearchValue] = useState("");
 
   const pageSize = 8;
 
@@ -63,6 +65,7 @@ const UsersList = () => {
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item);
+    setSearchValue("");
   };
 
   const handlePageChange = (pageIdx) => {
@@ -73,16 +76,26 @@ const UsersList = () => {
     setSortBy(item);
   };
 
+  const handleSearch = ({ target }) => {
+    setSelectedProf();
+    setSearchValue(target.value);
+  };
+
   if (users) {
     const filteredUsers = selectedProf
       ? users.filter(
-          (user) =>
-            JSON.stringify(user.profession) === JSON.stringify(selectedProf)
-        )
+        (user) =>
+          JSON.stringify(user.profession) === JSON.stringify(selectedProf)
+      )
       : users;
     const count = filteredUsers.length;
     const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
-    const usersCrop = paginate(sortedUsers, currentPage, pageSize);
+    const searchedUsers = searchValue
+      ? sortedUsers.filter((user) =>
+        user.name.toLowerCase().includes(searchValue.toLowerCase())
+      )
+      : sortedUsers;
+    const usersCrop = paginate(searchedUsers, currentPage, pageSize);
     const clearFilter = () => {
       setSelectedProf();
     };
@@ -103,6 +116,7 @@ const UsersList = () => {
         )}
         <div style={{ minWidth: "calc(100% - 142px)" }}>
           <SearchStatus length={count} />
+          <Search value={searchValue} onSearch={handleSearch} />
           {count > 0 && (
             <UserTable
               users={usersCrop}
@@ -128,7 +142,7 @@ const UsersList = () => {
 };
 
 UsersList.propTypes = {
-  users: PropTypes.array.isRequired
+  users: PropTypes.array
 };
 
 export default UsersList;

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 
 const TableHeader = ({ onSort, selectedSort, columns }) => {
   const handleSort = (item) => {
-    console.log("item->", item);
     if (selectedSort.path === item) {
       onSort({
         ...selectedSort,
