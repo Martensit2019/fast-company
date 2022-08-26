@@ -61,7 +61,7 @@ const UsersList = () => {
   }, []);
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedProf]);
+  }, [selectedProf, searchValue]);
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item);
