@@ -9,7 +9,7 @@ const UserPage = ({ id }) => {
   const [user, setUser] = useState();
   useEffect(() => {
     api.users.getById(id).then((res) => setUser(res));
-  });
+  }, []);
   const handleСlick = () => {
     history.push("/users");
   };
