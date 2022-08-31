@@ -14,8 +14,11 @@ const EditForm = ({ user }) => {
     email: user.email,
     profession: user.profession.name,
     sex: user.sex,
-    qualities: user.qualities,
-    licence: false
+    qualities: user.qualities.map((q) => ({
+      label: q.name,
+      value: q._id,
+      color: q.color
+    }))
   });
   const [qualities, setQualities] = useState({});
   const [professions, setProfessions] = useState();
@@ -168,6 +171,7 @@ const EditForm = ({ user }) => {
         onChange={handleChange}
         name="qualities"
         label="Выберите ваши качества"
+        defaultValue={user.qualities}
       />
       <button disabled={!isValid} className="btn btn-primary w-100 mx-auto">
         Обновить
