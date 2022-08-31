@@ -8,7 +8,7 @@ const UserPage = ({ id }) => {
   const history = useHistory();
   const [user, setUser] = useState();
   useEffect(() => {
-    api.users.getById(id).then((res) => setUser(res));
+    api.users.getById(id).then((data) => setUser(data));
   }, []);
   const handleСlick = () => {
     history.push(`/users/${id}/edit`);
