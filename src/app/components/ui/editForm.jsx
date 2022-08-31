@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
 import api from "../../api";
 import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radioField";
 import MultySelectField from "../common/form/multySelectField";
-import CheckBoxField from "../common/form/checkBoxField";
 
-const RegisterForm = () => {
+const EditForm = ({ user }) => {
+  console.log("user1", user);
   const [data, setData] = useState({
-    email: "",
-    password: "",
-    profession: "",
-    sex: "male",
-    qualities: [],
+    name: user.name,
+    email: user.email,
+    profession: user.profession.name,
+    sex: user.sex,
+    qualities: user.qualities,
     licence: false
   });
   const [qualities, setQualities] = useState({});
@@ -88,19 +89,18 @@ const RegisterForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <TextField
+        label="Имя"
+        name="name"
+        value={data.name}
+        onChange={handleChange}
+        error={errors.name}
+      />
+      <TextField
         label="Электронная почта"
         name="email"
         value={data.email}
         onChange={handleChange}
         error={errors.email}
-      />
-      <TextField
-        label="Пароль"
-        type="password"
-        name="password"
-        value={data.password}
-        onChange={handleChange}
-        error={errors.password}
       />
       <SelectField
         label="Выберите свою профессию"
@@ -128,20 +128,15 @@ const RegisterForm = () => {
         name="qualities"
         label="Выберите ваши качества"
       />
-      <CheckBoxField
-        value={data.licence}
-        onChange={handleChange}
-        defaultValue={data.qualities}
-        name="licence"
-        error={errors.licence}
-      >
-        Подтвердить <a>лицензионное cоглашение</a>
-      </CheckBoxField>
       <button disabled={!isValid} className="btn btn-primary w-100 mx-auto">
-        Войти
+        Обновить
       </button>
     </form>
   );
 };
 
-export default RegisterForm;
+EditForm.propTypes = {
+  user: PropTypes.object.isRequired
+};
+
+export default EditForm;

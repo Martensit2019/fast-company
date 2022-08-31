@@ -1,10 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const CheckBoxField = ({ name, value, onChange, children }) => {
+const CheckBoxField = ({ name, value, onChange, children, error }) => {
   const handleChange = () => {
-    console.log("bfd");
     onChange({ name, value: !value });
+  };
+
+  const getCheckBoxClasses = () => {
+    return `form-check-label ${error ? "is-invalid" : ""}`;
   };
 
   return (
@@ -14,11 +17,14 @@ const CheckBoxField = ({ name, value, onChange, children }) => {
         type="checkbox"
         value=""
         id={name}
+        name={name}
         onChange={handleChange}
+        checked={value}
       />
-      <label className="form-check-label" htmlFor={name} checked={value}>
+      <label className={getCheckBoxClasses()} htmlFor={name}>
         {children}
       </label>
+      {error && <div className="invalid-feedback">{error}</div>}
     </div>
   );
 };
@@ -30,7 +36,8 @@ CheckBoxField.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
-  ])
+  ]),
+  error: PropTypes.string
 };
 
 export default CheckBoxField;
