@@ -113,8 +113,8 @@ const RegisterForm = () => {
       />
       <RadioField
         options={[
-          { name: "Муж", value: "mail" },
-          { name: "Жен", value: "femail" },
+          { name: "Муж", value: "male" },
+          { name: "Жен", value: "female" },
           { name: "Другое", value: "other" }
         ]}
         value={data.sex}
