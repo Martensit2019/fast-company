@@ -4,6 +4,7 @@ import Login from "./app/layouts/login";
 import Main from "./app/layouts/main";
 import Users from "./app/layouts/users";
 import Navbar from "./app/components/ui/navbar";
+// import Edit from "./app/components/page/editUserPage/editUserPage";
 import Edit from "./app/layouts/edit";
 
 const App = () => {

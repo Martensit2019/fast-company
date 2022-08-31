@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/textField";
@@ -8,11 +9,11 @@ import RadioField from "../common/form/radioField";
 import MultySelectField from "../common/form/multySelectField";
 
 const EditForm = ({ user }) => {
-  console.log("user1", user);
+  const history = useHistory();
   const [data, setData] = useState({
     name: user.name,
     email: user.email,
-    profession: user.profession.name,
+    profession: user.profession._id,
     sex: user.sex,
     qualities: user.qualities.map((q) => ({
       label: q.name,
@@ -20,7 +21,7 @@ const EditForm = ({ user }) => {
       color: q.color
     }))
   });
-  const [qualities, setQualities] = useState({});
+  const [qualities, setQualities] = useState([]);
   const [professions, setProfessions] = useState();
   const [errors, setErrors] = useState({});
 
@@ -47,6 +48,11 @@ const EditForm = ({ user }) => {
   };
 
   const validatorConfig = {
+    name: {
+      isRequired: {
+        message: "Имя не может быть пустым"
+      }
+    },
     email: {
       isRequired: {
         message: "Электронная почта обязательна для заполнения"
@@ -120,14 +126,12 @@ const EditForm = ({ user }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isValid = validate();
-    if (!isValid) return;
-    const { profession, qualities } = data;
-    console.log({
+    api.users.update(user._id, {
       ...data,
-      profession: getProfessionById(profession),
-      qualities: getQualities(qualities)
+      profession: getProfessionById(data.profession),
+      qualities: getQualities(data.qualities)
     });
+    history.push(`/users/${user._id}`);
   };
 
   return (
@@ -171,7 +175,7 @@ const EditForm = ({ user }) => {
         onChange={handleChange}
         name="qualities"
         label="Выберите ваши качества"
-        defaultValue={user.qualities}
+        defaultValue={data.qualities}
       />
       <button disabled={!isValid} className="btn btn-primary w-100 mx-auto">
         Обновить
