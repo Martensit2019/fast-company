@@ -45,7 +45,6 @@ const EditUserPage = () => {
     }
     return qualitiesArray;
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const isValid = validate();
