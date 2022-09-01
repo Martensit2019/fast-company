@@ -11,7 +11,7 @@ const UserPage = ({ id }) => {
     api.users.getById(id).then((data) => setUser(data));
   }, []);
   const handleСlick = () => {
-    history.push("/users");
+    history.push(history.location.pathname + "/edit");
   };
   if (!user) {
     return "Loading...";
@@ -40,7 +40,7 @@ const UserPage = ({ id }) => {
       </Link>
       ----------------- */}
       <button className="btn bg-primary" onClick={handleСlick}>
-        Все пользователи
+        Изменить
       </button>
     </>
   );
