@@ -29,6 +29,7 @@ const EditUserPage = () => {
       }
     }
   };
+
   const getQualities = (elements) => {
     const qualitiesArray = [];
     for (const elem of elements) {
