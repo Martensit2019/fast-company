@@ -7,6 +7,7 @@ import GroupeList from "../../common/groupList";
 import SearchStatus from "../../ui/searchStatus";
 import UserTable from "../../ui/usersTable";
 import _ from "lodash";
+import { useUser } from "../../../hooks/useUsers";
 
 const UsersListPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,43 +15,39 @@ const UsersListPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedProf, setSelectedProf] = useState();
   const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
-
   const pageSize = 8;
 
-  // ------------
-  // ------------
-  const [users, setUsers] = useState();
+  const { users } = useUser();
 
-  useEffect(() => {
-    api.users.fetchAll().then((data) => setUsers(data));
-  }, []);
   const handleDelete = (userId) => {
-    setUsers(users.filter((user) => user._id !== userId));
+    // setUsers(users.filter((user) => user._id !== userId));
+    console.log(userId);
   };
   const handleToggleBookMark = (id) => {
-    setUsers(
-      // --------------------------------------------
-      // моё решение
-      // --------------------------------------------
-      users.map((user) => {
-        if (user._id === id) {
-          return { ...user, bookmark: !user.bookmark };
-        }
+    // setUsers(
+    // --------------------------------------------
+    // моё решение
+    // --------------------------------------------
+    // users.map((user) => {
+    //   if (user._id === id) {
+    //     return { ...user, bookmark: !user.bookmark };
+    //   }
+    //   return user;
+    // })
+    // --------------------------------------------
+    // ------------------------------------------
+    // решение из видео, но мне непонятно
+    // ------------------------------------------
+    const newArray = users.filter((user) => {
+      if (user._id === id) {
+        user.bookmark = !user.bookmark;
         return user;
-      })
-      // --------------------------------------------
-      // ------------------------------------------
-      // решение из видео, но мне непонятно
-      // ------------------------------------------
-      // users.filter((user) => {
-      //   if (user._id === id) {
-      //     user.bookmark = !user.bookmark;
-      //     return user;
-      //   }
-      //   return user;
-      // })
-      // -------------------------------------------
-    );
+      }
+      return user;
+    });
+    // -------------------------------------------
+    // );
+    console.log(newArray);
   };
   // ------------
   // ------------
