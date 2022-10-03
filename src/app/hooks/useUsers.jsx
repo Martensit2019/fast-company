@@ -8,6 +8,7 @@ const UserContext = React.createContext();
 export const useUser = () => {
   return useContext(UserContext);
 };
+
 const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [isLoading, setLoading] = useState(true);
