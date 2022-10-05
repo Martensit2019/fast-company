@@ -12,7 +12,6 @@ http.interceptors.request.use(
       const containSlash = /\/$/gi.test(config.url);
       config.url =
         (containSlash ? config.url.slice(0, -1) : config.url) + ".json";
-      console.log(config.url);
     }
 
     return config;
