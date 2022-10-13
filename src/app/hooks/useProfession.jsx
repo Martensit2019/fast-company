@@ -42,7 +42,9 @@ export const ProfessionProvider = ({ children }) => {
     setError(message);
   }
   return (
-    <ProfessionContext.Provider value={{ isLoading, professions, getProfession }}>
+    <ProfessionContext.Provider
+      value={{ isLoading, professions, getProfession }}
+    >
       {children}
     </ProfessionContext.Provider>
   );
@@ -54,5 +56,3 @@ ProfessionProvider.propTypes = {
     PropTypes.node
   ])
 };
-
-// export default ProfessionProvider;
