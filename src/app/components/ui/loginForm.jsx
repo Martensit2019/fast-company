@@ -49,11 +49,13 @@ const LoginForm = () => {
 
     try {
       await logIn(data);
-      history.push(
-        history.location.state.from.pathname
-          ? history.location.state.from.pathname
-          : "/"
-      );
+      // history.push(
+      //   history.location.state.from.pathname
+      //     ? history.location.state.from.pathname
+      //     : "/"
+      // );
+
+      history.push("/");
     } catch (error) {
       setEnterError(error.message);
       console.log(error.message);
