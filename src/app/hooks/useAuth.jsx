@@ -76,8 +76,8 @@ const AuthProvider = ({ children }) => {
         rate: randomInt(1, 5),
         completedMeetings: randomInt(0, 200),
         image: `https://avatars.dicebear.com/api/avataaars/${(Math.random() + 1)
-        .toString(36)
-        .substring(7)}.svg`,
+          .toString(36)
+          .substring(7)}.svg`,
         ...rest
       });
       console.log(data);
@@ -120,6 +120,15 @@ const AuthProvider = ({ children }) => {
     }
   }
 
+  const updateUserData = async (data) => {
+    try {
+      const { content } = await userService.create(data);
+      setUser(content);
+    } catch (error) {
+      errorCatcher(error);
+    }
+  };
+
   useEffect(() => {
     if (localStorageService.getAccessToken()) {
       getUserData();
@@ -135,7 +144,9 @@ const AuthProvider = ({ children }) => {
     }
   }, [error]);
   return (
-    <AuthContext.Provider value={{ logIn, signUp, currentUser, logOut }}>
+    <AuthContext.Provider
+      value={{ logIn, signUp, currentUser, logOut, updateUserData }}
+    >
       {!isLoading ? children : "Loading..."}
     </AuthContext.Provider>
   );
