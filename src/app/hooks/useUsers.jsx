@@ -12,7 +12,7 @@ export const useUser = () => {
 
 const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
-  const { currentUser } = useAuth;
+  const { currentUser } = useAuth();
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   useEffect(() => {
