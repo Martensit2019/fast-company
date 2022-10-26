@@ -7,16 +7,24 @@ import SelectField from "../../common/form/selectField";
 import TextField from "../../common/form/textField";
 import BackHistoryButton from "../../common/form/backButtton";
 import { useAuth } from "../../../hooks/useAuth";
-import { useQualities } from "../../../hooks/useQualities";
 import { useProfessions } from "../../../hooks/useProfession";
+import { useSelector } from "react-redux";
+import {
+  getQualities,
+  getQualitiesLoadingStatus
+} from "../../../store/qualities";
 
 const EditUserPage = () => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState();
   const { currentUser, updateUserData } = useAuth();
+
   const { professions, isLoading: professionsLoading } = useProfessions();
-  const { qualities, isLoading: qualitiesLoading } = useQualities();
+
+  const qualities = useSelector(getQualities());
+  const qualitiesLoading = useSelector(getQualitiesLoadingStatus());
+
   const [errors, setErrors] = useState({});
   const qualitiesList = qualities.map((q) => ({ label: q.name, value: q._id }));
   const professionsList = professions.map((p) => ({
