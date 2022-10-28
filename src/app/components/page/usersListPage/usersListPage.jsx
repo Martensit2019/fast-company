@@ -52,16 +52,8 @@ const UsersListPage = () => {
       }
       return user;
     });
-    // -------------------------------------------
-    // );
     console.log(newArray);
   };
-  // ------------
-  // ------------
-
-  // useEffect(() => {
-  //   api.professions.fetchAll().then((data) => setProfessions(data));
-  // }, []);
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedProf, searchQuery]);

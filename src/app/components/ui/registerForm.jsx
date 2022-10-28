@@ -33,24 +33,6 @@ const RegisterForm = () => {
     value: p._id
   }));
 
-  // useEffect(() => {
-  //   api.professions.fetchAll().then((data) => {
-  //     const professionsList = Object.keys(data).map((professionName) => ({
-  //       label: data[professionName].name,
-  //       value: data[professionName]._id
-  //     }));
-  //     setProfessions(professionsList);
-  //   });
-  //   api.qualities.fetchAll().then((data) => {
-  //     const qualitiesList = Object.keys(data).map((optionName) => ({
-  //       label: data[optionName].name,
-  //       value: data[optionName]._id,
-  //       color: data[optionName].color
-  //     }));
-  //     setQualities(qualitiesList);
-  //   });
-  // }, []);
-
   const handleChange = (target) => {
     setData((prev) => ({ ...prev, [target.name]: target.value }));
   };

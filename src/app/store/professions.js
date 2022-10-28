@@ -1,6 +1,6 @@
+import { createSlice } from "@reduxjs/toolkit";
 import professionService from "../services/profession.service";
-
-const { createSlice } = require("@reduxjs/toolkit");
+// import isOutdated from "../utils/isOutdated";
 
 const professionsSlice = createSlice({
   name: "professions",
@@ -14,6 +14,7 @@ const professionsSlice = createSlice({
     },
     professionsRecived: (state, action) => {
       state.entities = action.payload;
+      // state.lastFetch = Date.now();
       state.isLoading = false;
     },
     professionsRequestFiled: (state, action) => {
@@ -28,7 +29,9 @@ const { reducer: professionsReducer, actions } = professionsSlice;
 const { professionsRequested, professionsRecived, rofessionsRequestFiled } =
   actions;
 
-export const loadProfessionsList = () => async (dispatch) => {
+export const loadProfessionsList = () => async (dispatch, getState) => {
+  // const { lastFetch } = getState().professions;
+  // if (isOutdated(lastFetch)) {
   dispatch(professionsRequested());
   try {
     const { content } = await professionService.get();
@@ -36,8 +39,14 @@ export const loadProfessionsList = () => async (dispatch) => {
   } catch (error) {
     dispatch(rofessionsRequestFiled(error.massage));
   }
+  // }
 };
 export const getProfessions = () => (state) => state.professions.entities;
+export const getProfessionById = (id) => (state) => {
+  if (state.professions.entities) {
+    return state.professions.entities.find((p) => p._id === id);
+  }
+};
 export const getProfessionsLoadingStatus = () => (state) =>
   state.professions.isLoading;
 
