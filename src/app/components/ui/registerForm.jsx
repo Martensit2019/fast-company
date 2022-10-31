@@ -21,7 +21,6 @@ const RegisterForm = () => {
     qualities: [],
     licence: false
   });
-  // const { signUp } = useAuth();
 
   const qualities = useSelector(getQualities());
   const professions = useSelector(getProfessions());
