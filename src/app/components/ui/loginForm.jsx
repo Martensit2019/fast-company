@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { login } from "../../store/users";
+import { getAuthErrors, login } from "../../store/users";
 import { validator } from "../../utils/validator";
 import CheckBoxField from "../common/form/checkBoxField";
 import TextField from "../common/form/textField";
 
 const LoginForm = () => {
   const [data, setData] = useState({ email: "", password: "", stayOn: false });
+  const loginError = useSelector(getAuthErrors());
   const history = useHistory();
   const dispatch = useDispatch();
-  const [enterError, setEnterError] = useState(null);
   const [errors, setErrors] = useState({});
 
   const handleChange = (target) => {
     setData((prev) => ({ ...prev, [target.name]: target.value }));
-    setEnterError(null);
   };
 
   const validatorConfig = {
@@ -73,9 +72,9 @@ const LoginForm = () => {
       <CheckBoxField value={data.stayOn} onChange={handleChange} name="stayOn">
         <a>Оставаться в системе</a>
       </CheckBoxField>
-      {enterError && <p className="text-danger">{enterError}</p>}
+      {loginError && <p className="text-danger">{loginError}</p>}
       <button
-        disabled={!isValid || enterError}
+        disabled={!isValid}
         className="btn btn-primary w-100 mx-auto"
       >
         Войти
