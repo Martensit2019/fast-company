@@ -30,7 +30,7 @@ const { commentsRequested, commentsRecived, commentsRequestFiled } = actions;
 export const loadCommentsList = (userId) => async (dispatch) => {
   dispatch(commentsRequested());
   try {
-    const { content } = await commentService(getComments(userId));
+    const { content } = await commentService.getComments(userId);
     dispatch(commentsRecived(content));
   } catch (error) {
     dispatch(commentsRequestFiled(error.massage));
