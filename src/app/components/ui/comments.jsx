@@ -2,35 +2,44 @@ import { orderBy } from "lodash";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useComments } from "../../hooks/useComments";
 import {
+  createComment,
   getComments,
   getCommentsLoadingStatus,
-  loadCommentsList
+  loadCommentsList,
+  removeComment
 } from "../../store/comments";
+import { getCurrentUserId } from "../../store/users";
 import AddCommentForm from "../common/comments/addCommentForm";
 import CommentsList from "../common/comments/commentsList";
+import { nanoid } from "nanoid";
 
 const Comments = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
+  const currentUserId = useSelector(getCurrentUserId());
+  const isLoading = useSelector(getCommentsLoadingStatus());
 
   useEffect(() => {
     dispatch(loadCommentsList(userId));
   }, [userId]);
 
-  const isLoading = useSelector(getCommentsLoadingStatus());
-
-  const { createComment, removeComment } = useComments();
-
   const comments = useSelector(getComments());
 
   const handleSubmit = (data) => {
-    createComment(data);
+    const comment = {
+      ...data,
+      _id: nanoid(),
+      pageId: userId,
+      created_at: Date.now(),
+      userId: currentUserId
+    };
+
+    dispatch(createComment(comment));
   };
 
   const handleRemoveComment = (id) => {
-    removeComment(id);
+    dispatch(removeComment(id));
   };
   const sortedComments = orderBy(comments, ["created_at"], ["desc"]);
   return (
