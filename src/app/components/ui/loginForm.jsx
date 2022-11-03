@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { getAuthErrors, login } from "../../store/users";
 import { validator } from "../../utils/validator";
 import CheckBoxField from "../common/form/checkBoxField";
 import TextField from "../common/form/textField";
 
 const LoginForm = () => {
-  console.log(process.env);
   const [data, setData] = useState({ email: "", password: "", stayOn: false });
+  const loginError = useSelector(getAuthErrors());
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [errors, setErrors] = useState({});
 
   const handleChange = (target) => {
@@ -16,24 +21,11 @@ const LoginForm = () => {
     email: {
       isRequired: {
         message: "Электронная почта обязательна для заполнения"
-      },
-      isEmail: {
-        message: "Некорректный email"
       }
     },
     password: {
       isRequired: {
         message: "Пароль обязателен для заполнения"
-      },
-      isCapitalSymbol: {
-        message: "Пароль должен содержать хотя бы одну заглавную букву"
-      },
-      isContainDigit: {
-        message: "Пароль должен содержать хотя бы одну цифру"
-      },
-      min: {
-        message: "Пароль должен состоять минимум из 8 символов",
-        value: 8
       }
     }
   };
@@ -54,7 +46,10 @@ const LoginForm = () => {
     e.preventDefault();
     const isValid = validate();
     if (!isValid) return;
-    console.log(data);
+    const redirect = history.location.state
+      ? history.location.state.from.pathname
+      : "/";
+    dispatch(login({ payload: data, redirect }));
   };
 
   return (
@@ -77,7 +72,11 @@ const LoginForm = () => {
       <CheckBoxField value={data.stayOn} onChange={handleChange} name="stayOn">
         <a>Оставаться в системе</a>
       </CheckBoxField>
-      <button disabled={!isValid} className="btn btn-primary w-100 mx-auto">
+      {loginError && <p className="text-danger">{loginError}</p>}
+      <button
+        disabled={!isValid}
+        className="btn btn-primary w-100 mx-auto"
+      >
         Войти
       </button>
     </form>

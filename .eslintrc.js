@@ -13,6 +13,7 @@ module.exports = {
   },
   plugins: ["react"],
   rules: {
+    "react/no-unknown-property": ["error", { ignore: ["label"] }],
     // indent: ["error", 2],
     indent: "off",
     semi: [2, "always"],
@@ -21,7 +22,11 @@ module.exports = {
       { anonymous: "always", named: "never" }
     ],
     "multiline-ternary": ["off"],
-    quotes: ["error", "double", { allowTemplateLiterals: true }],
+    quotes: [
+      "error",
+      "double",
+      { allowTemplateLiterals: true, avoidEscape: true }
+    ],
     "no-unused-expressions": "off"
   }
 };

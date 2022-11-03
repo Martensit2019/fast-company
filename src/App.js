@@ -5,26 +5,23 @@ import Login from "./app/layouts/login";
 import Main from "./app/layouts/main";
 import Users from "./app/layouts/users";
 import Navbar from "./app/components/ui/navbar";
-import { ProfessionProvider } from "./app/hooks/useProfession";
-import { QualitiesProvider } from "./app/hooks/useQualities";
-import AuthProvider from "./app/hooks/useAuth";
+import ProtectedRoute from "./app/components/common/protectedRoute";
+import LogOut from "./app/layouts/logOut";
+import AppLoader from "./app/components/ui/hoc/appLoader";
 
 const App = () => {
   return (
     <div>
-      <AuthProvider>
+      <AppLoader>
         <Navbar />
-        <QualitiesProvider>
-          <ProfessionProvider>
-            <Switch>
-              <Route path="/users/:userId?/:edit?" component={Users} />
-              <Route path="/login/:type?" component={Login} />
-              <Route path="/" exact component={Main} />
-              <Redirect to="/" />
-            </Switch>
-          </ProfessionProvider>
-        </QualitiesProvider>
-      </AuthProvider>
+        <Switch>
+          <ProtectedRoute path="/users/:userId?/:edit?" component={Users} />
+          <Route path="/login/:type?" component={Login} />
+          <Route path="/logout" component={LogOut} />
+          <Route path="/" exact component={Main} />
+          <Redirect to="/" />
+        </Switch>
+      </AppLoader>
       <ToastContainer />
     </div>
   );
