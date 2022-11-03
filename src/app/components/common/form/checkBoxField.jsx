@@ -16,7 +16,8 @@ const CheckBoxField = ({ name, value, onChange, children }) => {
         id={name}
         onChange={handleChange}
       />
-      <label className="form-check-label" htmlFor={name} checked={value}>
+      <label className="form-check-label" htmlFor={name} defaultChecked={value}>
+      {/* <label className="form-check-label" htmlFor={name} checked={value}> */}
         {children}
       </label>
     </div>
